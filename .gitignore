@@ -36,4 +36,4 @@ mongo-data/
 letsencrypt/
 
 # Secrets from Heroku --> Render migration
-/.secrets
+/.env
