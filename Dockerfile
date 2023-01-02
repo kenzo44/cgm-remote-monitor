@@ -18,6 +18,8 @@ RUN npm install --cache /tmp/empty-cache && \
   # chown node:node /tmp/public
 
 USER node
-EXPOSE 1337
+# EXPOSE 1337
+# For Render
+EXPOSE 10000
 
 CMD ["node", "lib/server/server.js"]
