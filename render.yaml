@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: KandyLand
+    env: node
+    region: oregon # optional (defaults to oregon. Other regions: ohio, frankfurt, singapore)
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
