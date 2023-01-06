@@ -3,7 +3,7 @@ services:
     name: KandyLand
     env: node
     region: oregon # optional (defaults to oregon. Other regions: ohio, frankfurt, singapore)
-    plan: individual # optional (defaults to starter - this a PAID PLAN, $7/month. https://render.com/pricing)
+    plan: Free # optional (defaults to starter - this a PAID PLAN, $7/month. https://render.com/pricing)
     buildCommand: npm install
     startCommand: npm start
     healthCheckPath: /
