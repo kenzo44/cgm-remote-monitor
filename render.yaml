@@ -7,6 +7,3 @@ services:
     buildCommand: npm install
     startCommand: npm start
     healthCheckPath: /
-    envVars:
-      - key: INSECURE_USE_HTTP # TLS is terminated before reaching the app, so only needs to respond to HTTP.
-        value: true
