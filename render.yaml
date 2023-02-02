@@ -8,6 +8,8 @@ services:
     startCommand: npm start
     healthCheckPath: /
     envVars:
+      - key: AUTH_DEFAULT_ROLES # Secures portal
+        value: denied
       - key: INSECURE_USE_HTTP # TLS is terminated before reaching the app, so only needs to respond to HTTP.
         value: true
       - key: HOSTNAME # bind app to any internal IP
@@ -27,13 +29,13 @@ services:
       - key: ALARM_TIMEAGO_WARN_MINS # Default setting for new browser views, for the number of minutes since the last CGM reading to trigger an ALARM_TIMEAGO_WARN alarm.
         value: "15"
       - key: ALARM_TYPES # 'simple' and/or 'predict'. Simple alarms trigger when BG crosses the various thresholds set below. Predict alarms use a formula that forecasts where the BG is going based on its trend. You will *not* get warnings when crossing the BG thresholds set below when using the predict type.
-        value: "siple"
+        value: "predict"
       - key: ALARM_URGENT_HIGH # Default setting for new browser views, for the Urgent High alarm (triggered when BG crosses BG_HIGH). ('on' or 'off')
         value: "on"
       - key: ALARM_URGENT_LOW # Default setting for new browser views, for the Urgent Low alarm (triggered when BG crosses BG_LOW). ('on' or 'off')
         value: "on"
       - key: API_SECRET # A passphrase that must be at least 12 characters long. Avoid 'special' characters, which can cause problems in some cases.
-        generateValue: true
+        sync: false # will be requested when Blueprint is created
       - key: BG_HIGH # Urgent High BG threshold, triggers the ALARM_URGENT_HIGH alarm. Set in mg/dL or mmol/L, as set in DISPLAY_UNITS variable.
         value: "260"
       - key: BG_LOW # Urgent Low BG threshold, triggers the ALARM_URGENT_LOW alarm. Set in mg/dL or mmol/L, as set in DISPLAY_UNITS variable.
@@ -41,7 +43,7 @@ services:
       - key: BG_TARGET_BOTTOM # Low BG threshold, triggers the ALARM_LOW alarm. Set in mg/dL or mmol/L, as set in DISPLAY_UNITS variable.
         value: "80"
       - key: BG_TARGET_TOP # High BG threshold, triggers the ALARM_HIGH alarm. Set in mg/dL or mmol/L, as set in DISPLAY_UNITS variable.
-        value: 180"
+        value: "180"
       - key: BOLUS_RENDER_OVER # U value over which the bolus values are rendered on the chart if the 'x U and Over' option is selected.
         value: "1"
       - key: BRIDGE_PASSWORD # Your Dexcom account password, to receive CGM data from the Dexcom Share service. Also make sure to include 'bridge' in your ENABLE line.
@@ -55,7 +57,7 @@ services:
       - key: DISPLAY_UNITS # Preferred BG units for the site: 'mg/dl' or 'mmol/L' (or just 'mmol').
         value: "mmol/L"
       - key: ENABLE # Plugins to enable for your site. Must be a space-delimited, lower-case list. Include the word 'bridge' here if you are receiving data from the Dexcom Share service. Include 'mmconnect' if you are bridging from the MiniMed CareLink service.
-        value: "careportal basal dbize"
+        value: "careportal basal dbsize rawbg iob maker cob bwp cage iage sage boluscalc pushover treatmentnotify loop pump profile food openaps bage alexa override speech cors bridge"
       - key: MMCONNECT_USER_NAME # Your CareLink account username, to receive CGM data from the CareLink service. Also make sure to include 'mmconnect' in your ENABLE line.
         sync: false # will be requested when Blueprint is created
       - key: MMCONNECT_PASSWORD # Your CareLink account password, to receive CGM data from the CareLink service. Also make sure to include 'mmconnect' in your ENABLE line.
@@ -63,12 +65,12 @@ services:
       - key: MMCONNECT_SERVER # If you are bridging from the CareLink service, and are anywhere *outside* the US, change this to EU. ('US' or 'EU')
         value: "US"
       - key: NIGHT_MODE # Default setting for new browser views, for whether Night Mode should be enabled. ('on' or 'off')
-        value: off"
+        value: "off"
       - key: SHOW_PLUGINS # Default setting for whether or not these plugins are checked (active) by default, not merely enabled. Include plugins here as in the ENABLE line; space-separated and lower-case.
         value: "careportal dbize"
       - key: SHOW_RAWBG # Default setting for new browser views, for the display of raw CGM data (if available). ('always', 'never', or 'noise')
-        value: "nver"
+        value: "never"
       - key: THEME # Default setting for new browser views, for the color theme of the CGM graph. ('default', 'colors', or 'colorblindfriendly')
-        value: "coors"
+        value: "colors"
       - key: TIME_FORMAT # Default setting for new browser views, for the time mode. ('12' or '24')
         value: "12"
